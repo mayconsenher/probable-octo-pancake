@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Mellara Essence - Loja de perfumes">
+<title>Mellara Essence | Perfumes</title>
+
+<style>
+:root {
+ --navy:#07152e;
+ --gold:#d6b878;
+ --paper:#f7f6f3;
+}
+* {box-sizing:border-box;margin:0;padding:0}
+html {scroll-behavior:smooth}
+body {
+ font-family:Arial,sans-serif;
+ background:var(--paper);
+ color:#172238;
+ line-height:1.55;
+}
+header {
+ background:linear-gradient(120deg,#030916,#102c63);
+ color:white;
+ padding:22px 5%;
+ text-align:center;
+}
+header h1 {
+ font-size:30px;
+ letter-spacing:3px;
+}
+header p {color:#d6b878}
+nav {
+ background:white;
+ padding:16px;
+ text-align:center;
+}
+nav a {
+ color:#07152e;
+ text-decoration:none;
+ margin:0 12px;
+ font-weight:bold;
+}
+.hero {
+ background:linear-gradient(120deg,#030916,#102c63);
+ color:white;
+ padding:65px 20px;
+ text-align:center;
+}
+.hero h2 {font-size:36px}
+.hero p {margin-top:12px}
+.container {
+ max-width:1180px;
+ margin:40px auto;
+ padding:0 20px;
+}
+.section-title {
+ text-align:center;
+ color:#07152e;
+ margin-bottom:10px;
+ font-size:28px;
+}
+.sub {
+ text-align:center;
+ margin-bottom:25px;
+ color:#687386;
+}
+.search {
+ width:100%;
+ padding:14px;
+ border:1px solid #ddd;
+ border-radius:8px;
+ margin-bottom:20px;
+ font-size:16px;
+}
+.categories {
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:10px;
+ margin-bottom:30px;
+}
+.categories button {
+ padding:10px 18px;
+ border:1px solid #07152e;
+ background:white;
+ color:#07152e;
+ border-radius:20px;
+ cursor:pointer;
+}
+.categories button.active,
+.categories button:hover {
+ background:#07152e;
+ color:white;
+}
+.products {
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+ gap:25px;
+}
+.product {
+ background:white;
+ border-radius:12px;
+ overflow:hidden;
+ box-shadow:0 4px 18px #00000012;
+}
+.photo {
+ height:270px;
+ background:white;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ overflow:hidden;
+}
+.photo img {
+ width:100%;
+ height:100%;
+ object-fit:contain;
+ padding:10px;
+}
+.no-photo {
+ color:#999;
+ text-align:center;
+ padding:20px;
+}
+.info {padding:20px}
+.info h3 {
+ color:#07152e;
+ font-size:19px;
+ margin-bottom:12px;
+}
+.info p {
+ font-size:14px;
+ color:#666;
+ margin-bottom:7px;
+}
+.price {
+ color:#98713f;
+ font-size:23px;
+ font-weight:bold;
+ margin:18px 0;
+}
+.buy {
+ display:block;
+ background:#075e45;
+ color:white;
+ text-decoration:none;
+ padding:14px;
+ text-align:center;
+ border-radius:6px;
+ font-weight:bold;
+}
+.buy:hover {background:#064832}
+.contact {
+ background:#07152e;
+ color:white;
+ text-align:center;
+ padding:40px 20px;
+ margin-top:50px;
+}
+.contact p {margin:10px}
+.contact a {
+ display:inline-block;
+ padding:13px 20px;
+ margin:8px;
+ border-radius:7px;
+ text-decoration:none;
+ font-weight:bold;
+}
+.wa {background:#20b968;color:white}
+.ig {background:#d94a86;color:white}
+footer {
+ background:#030916;
+ color:white;
+ text-align:center;
+ padding:25px;
+}
+@media(max-width:600px) {
+ header h1 {font-size:23px}
+ .hero h2 {font-size:27px}
+ .products {grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <h1>MELLARA ESSENCE</h1>
+ <p>Perfumes que revelam sua essência</p>
+</header>
+
+<nav>
+ <a href="#inicio">Início</a>
+ <a href="#produtos">Produtos</a>
+ <a href="#contato">Contato</a>
+</nav>
+
+<section class="hero" id="inicio">
+ <h2>Encontre sua essência</h2>
+ <p>Fragrâncias especiais para momentos inesquecíveis.</p>
+</section>
+
+<main class="container" id="produtos">
+
+<h2 class="section-title">Nossa coleção</h2>
+<p class="sub">Escolha seu perfume e faça seu pedido!</p>
+
+<input
+ class="search"
+ id="search"
+ type="search"
+ placeholder="Pesquisar perfume..."
+>
+
+<div class="categories">
+ <button class="active" data-cat="todos">Todos</button>
+ <button data-cat="masculino">Masculinos</button>
+ <button data-cat="feminino">Femininos</button>
+ <button data-cat="especial">Especiais</button>
+</div>
+
+<div class="products">
+
+<article class="product" data-categoria="masculino" data-nome="egeo blue">
+ <div class="photo">
+  <div class="no-photo">Foto Egeo Blue</div>
+ </div>
+ <div class="info">
+  <h3>Egeo Blue</h3>
+  <p><b>Concentração:</b> Desodorante Colônia</p>
+  <p><b>Estilo:</b> Jovem, intenso e marcante, com toque adocicado.</p>
+  <p><b>Categoria:</b> Masculino</p>
+  <div class="price">R$ 164,90</div>
+  <a class="buy" data-product="Egeo Blue">COMPRAR AGORA</a>
+ </div>
+</article>
+
+<article class="product" data-categoria="especial" data-nome="egeo choc">
+ <div class="photo">
+  <div class="no-photo">Foto Egeo Choc</div>
+ </div>
+ <div class="info">
+  <h3>Egeo Choc</h3>
+  <p><b>Concentração:</b> A confirmar</p>
+  <p><b>Estilo:</b> Adocicado e envolvente.</p>
+  <p><b>Categoria:</b> Especial</p>
+  <div class="price">Preço a consultar</div>
+  <a class="buy" data-product="Egeo Choc">COMPRAR AGORA</a>
+ </div>
+</article>
+
+<article class="product" data-categoria="feminino" data-nome="lily">
+ <div class="photo">
+  <img src="imagens/lily.jpeg" alt="Lily">
+ </div>
+ <div class="info">
+  <h3>Lily</h3>
+  <p><b>Concentração:</b> Conforme versão da embalagem</p>
+  <p><b>Volume:</b> 75 ml</p>
+  <p><b>Categoria:</b> Feminino</p>
+  <div class="price">R$ 359,90</div>
+  <a class="buy" data-product="Lily">COMPRAR AGORA</a>
+ </div>
+</article>
+
+<article class="product" data-categoria="feminino" data-nome="glamour secrets black">
+ <div class="photo">
+  <img src="imagens/glamour-secrets-black.jpeg" alt="Glamour Secrets Black">
+ </div>
+ <div class="info">
+  <h3>Glamour Secrets Black</h3>
+  <p><b>Concentração:</b> Desodorante Colônia</p>
+  <p><b>Volume:</b> 75 ml</p>
+  <p><b>Categoria:</b> Feminino</p>
+  <div class="price">R$ 199,90</div>
+  <a class="buy" data-product="Glamour Secrets Black">COMPRAR AGORA</a>
+ </div>
+</article>
+
+<article class="product" data-categoria="masculino" data-nome="uomini spirit">
+ <div class="photo">
+  <img src="imagens/uomini-spirit.jpeg" alt="Uomini Spirit">
+ </div>
+ <div class="info">
+  <h3>Uomini Spirit</h3>
+  <p><b>Concentração:</b> Desodorante Colônia</p>
+  <p><b>Volume:</b> 100 ml</p>
+  <p><b>Categoria:</b> Masculino</p>
+  <div class="price">R$ 209,90</div>
+  <a class="buy" data-product="Uomini Spirit">COMPRAR AGORA</a>
+ </div>
+</article>
+
+<article class="product" data-categoria="feminino" data-nome="floratta red passion">
+ <div class="photo">
+  <img src="imagens/floratta-red-passion.jpeg" alt="Floratta Red Passion">
+ </div>
+ <div class="info">
+  <h3>Floratta Red Passion</h3>
+  <p><b>Concentração:</b> Eau de Parfum (conforme imagem)</p>
+  <p><b>Categoria:</b> Feminino</p>
+  <div class="price">R$ 229,90</div>
+  <a class="buy" data-product="Floratta Red Passion">COMPRAR AGORA</a>
+ </div>
+</article>
+
+<article class="product" data-categoria="feminino" data-nome="floratta rose sucrée">
+ <div class="photo">
+  <img src="imagens/floratta-rose-sucree.jpeg" alt="Floratta Rose Sucrée">
+ </div>
+ <div class="info">
+  <h3>Floratta Rose Sucrée</h3>
+  <p><b>Concentração:</b> Eau de Parfum</p>
+  <p><b>Volume:</b> 75 ml</p>
+  <p><b>Categoria:</b> Feminino</p>
+  <div class="price">R$ 229,90</div>
+  <a class="buy" data-product="Floratta Rose Sucrée">COMPRAR AGORA</a>
+ </div>
+</article>
+
+</div>
+</main>
+
+<section class="contact" id="contato">
+ <h2>Fale com a Mellara Essence</h2>
+ <p>Estamos esperando seu contato!</p>
+
+ <a class="wa"
+ href="https://wa.me/5569993719212"
+ target="_blank">
+ WhatsApp
+ </a>
+
+ <a class="ig"
+ href="https://www.instagram.com/mellara.essence/"
+ target="_blank">
+ Instagram
+ </a>
+
+ <p>Sua satisfação é a nossa maior conquista. Volte sempre!</p>
+</section>
+
+<footer>
+ © 2026 Mellara Essence
+</footer>
+
+<script>
+const NUMERO = "5569993719212";
+
+function linkWhatsApp(produto) {
+ const mensagem = "Olá! Tenho interesse no perfume " +
+ produto + ". Poderia me informar a disponibilidade?";
+
+ return "https://wa.me/" + NUMERO +
+ "?text=" + encodeURIComponent(mensagem);
+}
+
+document.querySelectorAll(".buy").forEach(botao => {
+ botao.href = linkWhatsApp(botao.dataset.product);
+ botao.target = "_blank";
+ botao.rel = "noopener";
+});
+
+let categoriaAtual = "todos";
+
+const busca = document.getElementById("search");
+
+function filtrar() {
+ const termo = busca.value.toLowerCase();
+
+ document.querySelectorAll(".product").forEach(produto => {
+  const nome = produto.dataset.nome;
+  const categoria = produto.dataset.categoria;
+
+  const nomeOk = nome.includes(termo);
+  const categoriaOk =
+   categoriaAtual === "todos" ||
+   categoriaAtual === categoria;
+
+  produto.style.display =
+   nomeOk && categoriaOk ? "" : "none";
+ });
+}
+
+busca.addEventListener("input", filtrar);
+
+document.querySelectorAll(".categories button").forEach(botao => {
+ botao.addEventListener("click", () => {
+  categoriaAtual = botao.dataset.cat;
+
+  document.querySelectorAll(".categories button")
+   .forEach(b => b.classList.remove("active"));
+
+  botao.classList.add("active");
+  filtrar();
+ });
+});
+</script>
+
+</body>
+</html>

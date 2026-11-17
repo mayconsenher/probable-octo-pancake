@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administração | Mellara Essence</title>
+<style>
+:root{
+  --brown:#382820;
+  --gold:#bd9a65;
+  --cream:#f8f4ee;
+  --red:#a33b35;
+  --green:#286b43;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--cream);
+  color:#382820;
+}
+header{
+  background:var(--brown);
+  color:white;
+  padding:20px;
+  text-align:center;
+}
+header h1{
+  color:var(--gold);
+  font-family:Georgia,serif;
+  margin:0 0 6px;
+}
+header p{margin:0;font-size:13px}
+.container{
+  max-width:1100px;
+  margin:25px auto;
+  padding:0 15px;
+}
+.card{
+  background:white;
+  padding:22px;
+  border-radius:9px;
+  box-shadow:0 3px 15px #0000000c;
+  margin-bottom:20px;
+}
+.login{
+  max-width:420px;
+  margin:55px auto;
+}
+h2{font-family:Georgia,serif}
+label{
+  display:block;
+  font-weight:bold;
+  font-size:13px;
+  margin:13px 0 6px;
+}
+input,textarea,select{
+  width:100%;
+  padding:12px;
+  border:1px solid #d8cbbb;
+  border-radius:5px;
+  font-size:14px;
+  background:white;
+}
+textarea{min-height:75px;resize:vertical}
+button{
+  border:0;
+  border-radius:5px;
+  padding:12px 16px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.primary{
+  background:var(--brown);
+  color:white;
+}
+.gold{
+  background:var(--gold);
+  color:#281c15;
+}
+.danger{
+  background:var(--red);
+  color:white;
+}
+.success{
+  background:var(--green);
+  color:white;
+}
+.full{width:100%;margin-top:18px}
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.hidden{display:none!important}
+.notice{
+  background:#fff5df;
+  border:1px solid #e8d2a8;
+  padding:12px;
+  border-radius:5px;
+  font-size:13px;
+  line-height:1.5;
+  margin:15px 0;
+}
+.dashboard{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+}
+.stat{
+  background:#f8f4ee;
+  padding:17px;
+  border-radius:7px;
+}
+.stat strong{
+  display:block;
+  font-size:25px;
+  color:var(--brown);
+  margin-top:8px;
+}
+.product-row{
+  border:1px solid #eadfd3;
+  border-radius:7px;
+  padding:14px;
+  margin:12px 0;
+}
+.product-row h3{margin:0 0 8px}
+.product-row p{
+  font-size:13px;
+  color:#776b61;
+  overflow-wrap:anywhere;
+}
+.product-row img{
+  width:75px;
+  height:75px;
+  object-fit:contain;
+  background:#f8f4ee;
+  border-radius:5px;
+  float:right;
+}
+.top-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+small{color:#776b61}
+footer{
+  text-align:center;
+  padding:25px;
+  color:#776b61;
+  font-size:12px;
+}
+@media(max-width:500px){
+  .card{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Mellara Essence</h1>
+  <p>Painel de Administração</p>
+</header>
+
+<section id="loginArea" class="container login card">
+  <h2>Acesso administrativo</h2>
+  <p>Entre com suas credenciais para administrar a loja.</p>
+
+  <label for="usuario">Login</label>
+  <input id="usuario" autocomplete="username" placeholder="Seu login">
+
+  <label for="senha">Senha</label>
+  <input id="senha" type="password" autocomplete="current-password" placeholder="Sua senha">
+
+  <button class="primary full" onclick="entrar()">ENTRAR NO PAINEL</button>
+  <p id="erroLogin" style="color:#a33b35;font-size:13px"></p>
+
+  <div class="notice">
+    Este acesso é uma proteção básica de demonstração. Para proteger dados e operações reais, será necessário configurar autenticação no servidor.
+  </div>
+  <p><a href="index.html">← Voltar para a loja</a></p>
+</section>
+
+<main id="painel" class="container hidden">
+
+  <div class="card top-actions">
+    <div>
+      <h2>Bem-vindo ao painel!</h2>
+      <small>Gerencie os produtos da Mellara Essence.</small>
+    </div>
+    <div class="actions">
+      <a href="index.html"><button class="gold">Ver loja</button></a>
+      <button class="danger" onclick="sair()">Sair</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Resumo da loja</h2>
+    <div class="dashboard">
+      <div class="stat">Produtos cadastrados<strong id="totalProdutos">0</strong></div>
+      <div class="stat">Produtos ativos<strong id="ativos">0</strong></div>
+      <div class="stat">Produtos inativos<strong id="inativos">0</strong></div>
+    </div>
+  </div>
+
+  <section class="card" id="formulario">
+    <h2 id="tituloFormulario">Cadastrar produto</h2>
+
+    <input type="hidden" id="produtoId">
+
+    <label for="nome">Nome do produto *</label>
+    <input id="nome" placeholder="Ex.: Perfume Lily L'Or Elixir">
+
+    <label for="descricao">Descrição</label>
+    <textarea id="descricao" placeholder="Descreva o produto"></textarea>
+
+    <label for="categoria">Categoria</label>
+    <select id="categoria">
+      <option value="Perfumes">Perfumes</option>
+      <option value="Beleza">Beleza</option>
+      <option value="Cuidados pessoais">Cuidados pessoais</option>
+    </select>
+
+    <label for="preco">Preço (R$)</label>
+    <input id="preco" type="number" min="0" step="0.01" placeholder="0.00">
+
+    <label for="imagem">Link da imagem do produto</label>
+    <input id="imagem" type="url" placeholder="https://...">
+
+    <label for="link">Link de compra ou afiliado</label>
+    <input id="link" type="url" placeholder="https://...">
+
+    <label for="estoque">Quantidade em estoque</label>
+    <input id="estoque" type="number" min="0" step="1" value="10">
+
+    <label>
+      <input id="ativo" type="checkbox" checked style="width:auto">
+      Produto ativo na loja
+    </label>
+
+    <div class="actions">
+      <button class="primary" onclick="salvarProduto()">SALVAR PRODUTO</button>
+      <button class="gold" onclick="limparFormulario()">LIMPAR</button>
+    </div>
+    <p id="mensagem" style="font-size:13px;margin-top:12px"></p>
+  </section>
+
+  <section class="card">
+    <h2>Produtos cadastrados</h2>
+    <div id="listaAdmin"></div>
+  </section>
+
+  <section class="card">
+    <h2>Promoção da loja</h2>
+    <label for="promocao">Mensagem promocional</label>
+    <input id="promocao" placeholder="Ex.: Semana especial de perfumes!">
+    <div class="actions">
+      <button class="primary" onclick="salvarPromocao()">SALVAR PROMOÇÃO</button>
+      <button class="danger" onclick="removerPromocao()">REMOVER PROMOÇÃO</button>
+    </div>
+    <p><small>A promoção aparece na página principal quando este navegador compartilha os mesmos dados locais.</small></p>
+  </section>
+
+</main>
+
+<footer>Mellara Essence | Administração</footer>
+
+<script>
+const CHAVE_PRODUTOS = "mellaraProdutos";
+const CHAVE_PROMO = "mellaraPromo";
+
+const LOGIN_CORRETO = "melara essence";
+const SENHA_CORRETA = "V9!qR4#zN8@pL2$xT7mK";
+
+const iniciais = [
+  {
+    id:"lily-elixir",
+    nome:"Lily L'Or Elixir Eau de Parfum, 75 ml",
+    descricao:"Uma fragrância sofisticada e marcante.",
+    categoria:"Perfumes",
+    preco:359.90,
+    imagem:"",
+    link:"",
+    ativo:true,
+    estoque:10
+  },
+  {
+    id:"glamour-secrets",
+    nome:"Glamour Secrets Black O Boticário, 75 ml",
+    descricao:"Uma fragrância envolvente para momentos especiais.",
+    categoria:"Perfumes",
+    preco:0,
+    imagem:"",
+    link:"",
+    ativo:true,
+    estoque:10
+  }
+];
+
+function carregarProdutos(){
+  try{
+    const dados = JSON.parse(localStorage.getItem(CHAVE_PRODUTOS));
+    if(Array.isArray(dados)) return dados;
+  }catch(e){}
+  localStorage.setItem(CHAVE_PRODUTOS,JSON.stringify(iniciais));
+  return iniciais;
+}
+
+let produtos = carregarProdutos();
+
+function escapar(valor){
+  return String(valor ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
+}
+
+function entrar(){
+  const usuario = document.getElementById("usuario").value.trim().toLowerCase();
+  const senha = document.getElementById("senha").value;
+
+  if(usuario === LOGIN_CORRETO && senha === SENHA_CORRETA){
+    sessionStorage.setItem("mellaraAdminLogado","sim");
+    mostrarPainel();
+  }else{
+    document.getElementById("erroLogin").textContent =
+      "Login ou senha incorretos. Tente novamente.";
+  }
+}
+
+function mostrarPainel(){
+  const logado = sessionStorage.getItem("mellaraAdminLogado") === "sim";
+  document.getElementById("loginArea").classList.toggle("hidden",logado);
+  document.getElementById("painel").classList.toggle("hidden",!logado);
+
+  if(logado){
+    produtos = carregarProdutos();
+    listarProdutos();
+    atualizarDashboard();
+    document.getElementById("promocao").value =
+      localStorage.getItem(CHAVE_PROMO) || "";
+  }
+}
+
+function sair(){
+  sessionStorage.removeItem("mellaraAdminLogado");
+  document.getElementById("senha").value = "";
+  mostrarPainel();
+}
+
+function guardar(){
+  localStorage.setItem(CHAVE_PRODUTOS,JSON.stringify(produtos));
+  atualizarDashboard();
+  listarProdutos();
+}
+
+function limparFormulario(){
+  document.getElementById("produtoId").value = "";
+  document.getElementById("nome").value = "";
+  document.getElementById("descricao").value = "";
+  document.getElementById("categoria").value = "Perfumes";
+  document.getElementById("preco").value = "";
+  document.getElementById("imagem").value = "";
+  document.getElementById("link").value = "";
+  document.getElementById("estoque").value = "10";
+  document.getElementById("ativo").checked = true;
+  document.getElementById("tituloFormulario").textContent = "Cadastrar produto";
+  document.getElementById("mensagem").textContent = "";
+}
+
+function salvarProduto(){
+  const id = document.getElementById("produtoId").value;
+  const nome = document.getElementById("nome").value.trim();
+
+  if(!nome){
+    alert("Informe o nome do produto.");
+    return;
+  }
+
+  const produto = {
+    id:id || String(Date.now()),
+    nome:nome,
+    descricao:document.getElementById("descricao").value.trim(),
+    categoria:document.getElementById("categoria").value,
+    preco:Math.max(0,Number(document.getElementById("preco").value)||0),
+    imagem:document.getElementById("imagem").value.trim(),
+    link:document.getElementById("link").value.trim(),
+    estoque:Math.max(0,Number(document.getElementById("estoque").value)||0),
+    ativo:document.getElementById("ativo").checked
+  };
+
+  if(id){
+    const indice = produtos.findIndex(p=>String(p.id)===String(id));
+    if(indice !== -1) produtos[indice] = produto;
+  }else{
+    produtos.push(produto);
+  }
+
+  guardar();
+  limparFormulario();
+  document.getElementById("mensagem").textContent =
+    "Produto salvo com sucesso neste navegador.";
+}
+
+function editarProduto(id){
+  const p = produtos.find(item=>String(item.id)===String(id));
+  if(!p) return;
+
+  document.getElementById("produtoId").value = p.id;
+  document.getElementById("nome").value = p.nome || "";
+  document.getElementById("descricao").value = p.descricao || "";
+  document.getElementById("categoria").value = p.categoria || "Perfumes";
+  document.getElementById("preco").value = p.preco || "";
+  document.getElementById("imagem").value = p.imagem || "";
+  document.getElementById("link").value = p.link || "";
+  document.getElementById("estoque").value = p.estoque ?? 0;
+  document.getElementById("ativo").checked = p.ativo !== false;
+  document.getElementById("tituloFormulario").textContent = "Editar produto";
+
+  document.getElementById("formulario").scrollIntoView({behavior:"smooth"});
+}
+
+function excluirProduto(id){
+  if(!confirm("Tem certeza que deseja excluir este produto?")) return;
+  produtos = produtos.filter(p=>String(p.id)!==String(id));
+  guardar();
+}
+
+function alterarStatus(id){
+  const p = produtos.find(item=>String(item.id)===String(id));
+  if(!p) return;
+  p.ativo = p.ativo === false;
+  guardar();
+}
+
+function atualizarDashboard(){
+  document.getElementById("totalProdutos").textContent = produtos.length;
+  document.getElementById("ativos").textContent =
+    produtos.filter(p=>p.ativo !== false).length;
+  document.getElementById("inativos").textContent =
+    produtos.filter(p=>p.ativo === false).length;
+}
+
+function listarProdutos(){
+  const lista = document.getElementById("listaAdmin");
+
+  if(!produtos.length){
+    lista.innerHTML = "<p>Nenhum produto cadastrado.</p>";
+    return;
+  }
+
+  lista.innerHTML = produtos.map(p=>`
+    <article class="product-row">
+      ${p.imagem ? `<img src="${escapar(p.imagem)}" alt="" onerror="this.style.display='none'">` : ""}
+      <h3>${escapar(p.nome)}</h3>
+      <p>Categoria: ${escapar(p.categoria || "Não informada")}</p>
+      <p>Preço: R$ ${Number(p.preco||0).toFixed(2).replace(".",",")}</p>
+      <p>Estoque: ${Number(p.estoque||0)}</p>
+      <p>Status: ${p.ativo === false ? "Inativo" : "Ativo"}</p>
+      <div class="actions">
+        <button class="gold" onclick="editarProduto('${escapar(p.id)}')">Editar</button>
+        <button class="success" onclick="alterarStatus('${escapar(p.id)}')">
+          ${p.ativo === false ? "Ativar" : "Desativar"}
+        </button>
+        <button class="danger" onclick="excluirProduto('${escapar(p.id)}')">Excluir</button>
+      </div>
+    </article>
+  `).join("");
+}
+
+function salvarPromocao(){
+  const texto = document.getElementById("promocao").value.trim();
+  if(!texto){
+    alert("Digite uma mensagem para a promoção.");
+    return;
+  }
+  localStorage.setItem(CHAVE_PROMO,texto);
+  alert("Promoção salva neste navegador.");
+}
+
+function removerPromocao(){
+  localStorage.removeItem(CHAVE_PROMO);
+  document.getElementById("promocao").value = "";
+  alert("Promoção removida deste navegador.");
+}
+
+document.addEventListener("keydown",event=>{
+  if(event.key==="Enter" &&
+     !document.getElementById("painel").classList.contains("hidden")){
+    return;
+  }
+  if(event.key==="Enter" &&
+     !document.getElementById("loginArea").classList.contains("hidden")){
+    entrar();
+  }
+});
+
+mostrarPainel();
+</script>
+</body>
+</html>

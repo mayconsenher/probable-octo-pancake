@@ -1,0 +1,78 @@
+carrinho = carrinho.filter(p => String(p.id) !== String(id));
+  salvarCarrinho();
+  atualizarCarrinho();
+}
+
+function atualizarCarrinho(){
+  document.getElementById("cartCount").textContent =
+    carrinho.reduce((s,p)=>s+p.quantidade,0);
+
+  document.getElementById("cartItems").innerHTML =
+    carrinho.length ? carrinho.map(p=>`
+      <div class="cart-item">
+        ${escapar(p.nome)} × ${p.quantidade}
+        <button onclick="removerCarrinho('${escapar(p.id)}')">Remover</button>
+      </div>
+    `).join("") : "<p>Sua sacola está vazia.</p>";
+
+  const total = carrinho.reduce(
+    (s,p)=>s+(Number(p.preco)||0)*p.quantidade,0
+  );
+  document.getElementById("cartTotal").textContent = moeda(total);
+}
+
+function finalizarCompra(){
+  if(!carrinho.length){
+    alert("Sua sacola está vazia.");
+    return;
+  }
+
+  let mensagem = "Olá! Gostaria de fazer um pedido na Mellara Essence:\n\n";
+  carrinho.forEach(p=>{
+    mensagem += `${p.nome} - Quantidade: ${p.quantidade}\n`;
+  });
+
+  mensagem += "\nTotal: R$ " + moeda(
+    carrinho.reduce((s,p)=>s+(Number(p.preco)||0)*p.quantidade,0)
+  );
+
+  window.open(
+    "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(mensagem),
+    "_blank"
+  );
+}
+
+function mostrarPromocao(){
+  const texto = localStorage.getItem("mellaraPromo");
+  const elemento = document.getElementById("promo");
+
+  if(texto){
+    elemento.textContent = texto;
+    elemento.style.display = "block";
+  }else{
+    elemento.style.display = "none";
+  }
+}
+
+document.getElementById("busca").addEventListener("input",renderizarProdutos);
+document.getElementById("categoria").addEventListener("change",renderizarProdutos);
+
+window.addEventListener("storage",event=>{
+  if(["mellaraProdutos","mellaraPromo"].includes(event.key)){
+    renderizarProdutos();
+    mostrarPromocao();
+  }
+
+  if(event.key === "mellaraCarrinho"){
+    carrinho = carregarCarrinho();
+    atualizarCarrinho();
+  }
+});
+
+renderizarProdutos();
+mostrarPromocao();
+atualizarCarrinho();
+</script>
+
+</body>
+</html>
